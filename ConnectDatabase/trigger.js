@@ -5,18 +5,18 @@ const AWS = require('aws-sdk');
 const stepfunctions = new AWS.StepFunctions();
 const ssm = new AWS.SSM();
 
-const getCredentials = async (name, input) => {
-        return new Promise((resolve, reject) => {
-            var params = {   
-                Name: '/dev/db/username',
-                WithDecryption: true
-            };
-            ssm.getParameters(params, function(err, data) {
-                if (err) reject(err, err.stack); // an error occurred
-                else     resolve(data);           // successful response
-              });
-        });
-}
+// const getCredentials = async (name, input) => {
+//         return new Promise((resolve, reject) => {
+//             var params = {   
+//                 Name: '/dev/db/username',
+//                 WithDecryption: true
+//             };
+//             ssm.getParameters(params, function(err, data) {
+//                 if (err) reject(err, err.stack); // an error occurred
+//                 else     resolve(data);           // successful response
+//               });
+//         });
+// }
 
 exports.handler = async (event, context, callback) => {
     const asyncFunctions = [];
