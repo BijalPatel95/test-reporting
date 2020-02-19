@@ -36,8 +36,6 @@ async function handler(event) {
     const page = await browser.newPage();
     fs.mkdirSync('/tmp/downloads', { recursive: true });
     try {
-        console.log('impersonating');
-        console.log('page' + page + 'username'+username + uname + pass)
         await impersonate.login(page, username, uname, pass);
     } catch (e) {
         console.log(e);
