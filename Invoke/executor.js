@@ -25,14 +25,14 @@ async function handler(event) {
     const pageType = report.pageType;
     const pageNumbers = report.pageNumbers;
     const changed_filename = `${report.fileName}.pdf`;
-    // // const browser = await puppeteer.launch({ headless: false, defaultViewport: null });
+    // const browser = await puppeteer.launch({ headless: false, defaultViewport: null });
 
-    // const browser = await puppeteer.launch({
-    //     args: chromium.args,
-    //     defaultViewport: chromium.defaultViewport,
-    //     executablePath: await chromium.executablePath,
-    //     headless: true,
-    // });
+    const browser = await puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath,
+        headless: true,
+    });
     // const page = await browser.newPage();
     // fs.mkdirSync('/tmp/downloads', { recursive: true });
     // try {
