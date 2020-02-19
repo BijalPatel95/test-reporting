@@ -55,60 +55,60 @@ async function handler(event) {
         console.log(e);
         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);
     }
-    // //Rename
-    // try {
-    //     fs.readdirSync('/tmp/downloads').forEach(file => {
-    //         fs.renameSync('/tmp/downloads/' + file, '/tmp/downloads/' + changed_filename);
-    //         console.log(file);
-    //         console.log('rename done');
-    //     });
-    // } catch (e) {
-    //     console.log(e);
-    //     // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not renamed - ${e} `);
-    // }
-    // //Super Impose
-    // if (reportType == 'spotfire') {
-    //     try {
-    //         await superImpose.superImpose(changed_filename);
-    //     } catch (e) {
-    //         console.log(e);
-    //         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);
-    //     }
-    // }
-    // //upload
-    // try {
-    //     await reportingActions.uploadReport(report);
-    // } catch (e) {
-    //     console.log(e);
-    //     // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not uploaded - ${e} `);
-    // }
-    // const objectExist = await s3.objectExist(`${report.fund}/${changed_filename}`);
+    //Rename
+    try {
+        fs.readdirSync('/tmp/downloads').forEach(file => {
+            fs.renameSync('/tmp/downloads/' + file, '/tmp/downloads/' + changed_filename);
+            console.log(file);
+            console.log('rename done');
+        });
+    } catch (e) {
+        console.log(e);
+        // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not renamed - ${e} `);
+    }
+    //Super Impose
+    if (reportType == 'spotfire') {
+        try {
+            await superImpose.superImpose(changed_filename);
+        } catch (e) {
+            console.log(e);
+            // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);
+        }
+    }
+    //upload
+    try {
+        await reportingActions.uploadReport(report);
+    } catch (e) {
+        console.log(e);
+        // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not uploaded - ${e} `);
+    }
+    const objectExist = await s3.objectExist(`${report.fund}/${changed_filename}`);
 
-    // // mail
-    // if (objectExist) {
-    //     try {
-    //         console.log('obj exist');
-    //         await mail.mail(report, changed_filename, reportType);
-    //         console.log('mail sent');
-    //     } catch (e) {
-    //         console.log(e);
-    //         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Mail was not send. - ${e} `);
-    //     }
-    // }
+    // mail
+    if (objectExist) {
+        try {
+            console.log('obj exist');
+            await mail.mail(report, changed_filename, reportType);
+            console.log('mail sent');
+        } catch (e) {
+            console.log(e);
+            // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Mail was not send. - ${e} `);
+        }
+    }
 
-    // //delete
-    // try {
-    //     await fs.unlinkSync('/tmp/downloads/' + changed_filename);
-    // } catch (e) {
-    //     console.log(e);
-    //     // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not deleted - ${e} `);
-    // }
+    //delete
+    try {
+        await fs.unlinkSync('/tmp/downloads/' + changed_filename);
+    } catch (e) {
+        console.log(e);
+        // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not deleted - ${e} `);
+    }
 
-    // //logout from portal
-    // await page.goto(process.env.portal + '/logout');
-    // //logout from eds admin
-    // await page.goto(process.env.edsAdmin + 'logout');
+    //logout from portal
+    await page.goto(process.env.portal + '/logout');
+    //logout from eds admin
+    await page.goto(process.env.edsAdmin + 'logout');
 
-    // await browser.close();
+    await browser.close();
 }
 exports.handler = handler;
