@@ -35,7 +35,7 @@ exports.handler = async (event, context, callback) => {
     for (let report of reportList){
         i = i+1;
         asyncFunctions.push(
-            startExecution(`Try${i}_${(new Date().toISOString().split('T')[0])}`, report)
+            startExecution(`Try1_${i}_${(new Date().toISOString().split('T')[0])}`, report)
         )
     }
 
