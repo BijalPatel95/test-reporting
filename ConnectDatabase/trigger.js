@@ -18,6 +18,15 @@ const ssm = new AWS.SSM();
 //         });
 // }
 
+
+// async function test(){
+//     const reportList = await reportingActions.getReportsList('Daily', '8AM', undefined);
+//         for (let report of reportList) {
+//                 console.log(report);
+//         }
+// }
+// test();
+
 exports.handler = async (event, context, callback) => {
     const asyncFunctions = [];
     const reportList = await reportingActions.getReportsList('Daily', '8AM', undefined);
@@ -26,7 +35,7 @@ exports.handler = async (event, context, callback) => {
     for (let report of reportList){
         i = i+1;
         asyncFunctions.push(
-            startExecution(`Report${i}_${(new Date().toISOString().split('T')[0])}`, report)
+            startExecution(`Reporting${i}_${(new Date().toISOString().split('T')[0])}`, report)
         )
     }
 
