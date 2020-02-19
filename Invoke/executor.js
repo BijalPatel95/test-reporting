@@ -16,7 +16,8 @@ const pass = process.env.edsAdminPassword;
 
 async function handler(event) {
     //Impersonate
-    const report = JSON.parse(event.Records[0].body);
+    // const report = JSON.parse(event.Records[0].body);
+    const report = event;
     const username = report.scheduledBy;
     const reportType = report.reportType;
     const preparedReportName = report.preparedReportName;
