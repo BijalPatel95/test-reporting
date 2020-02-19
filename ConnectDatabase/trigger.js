@@ -22,9 +22,11 @@ exports.handler = async (event, context, callback) => {
     const asyncFunctions = [];
     const reportList = await reportingActions.getReportsList('Daily', '8AM', undefined);
 
+    let i = 0;
     for (let report of reportList){
+        i = i+1;
         asyncFunctions.push(
-            startExecution(`Report${i + 1}_${(new Date().toISOString().split('T')[0])}`, report)
+            startExecution(`Report${i}_${(new Date().toISOString().split('T')[0])}`, report)
         )
     }
 
