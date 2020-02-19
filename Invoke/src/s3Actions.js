@@ -1,3 +1,4 @@
+require('dotenv').config();
 const AWS = require('aws-sdk')
 const fs = require('fs');
 const slack = require("./slackNotifier");

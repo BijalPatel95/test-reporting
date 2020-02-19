@@ -1,3 +1,4 @@
+require('dotenv').config();
 async function constructionReport(page,link1) {
     await page.goto(process.env.portal+link1);
     

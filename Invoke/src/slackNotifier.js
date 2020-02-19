@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fetch = require ('node-fetch');
 
 exports.notifyError = async function(error) {

@@ -1,3 +1,4 @@
+require('dotenv').config();
 async function preparedReport(page,link1,preparedReportName) {
     await page.waitFor(15000);
     await page.goto(process.env.portalAnalysis+link1);

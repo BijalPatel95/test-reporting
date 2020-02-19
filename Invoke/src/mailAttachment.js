@@ -1,4 +1,5 @@
 var aws = require('aws-sdk');
+require('dotenv').config();
 var nodemailer = require('nodemailer');
 const Database = require("./database");
 var ses = new aws.SES();

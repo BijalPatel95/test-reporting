@@ -1,3 +1,4 @@
+require('dotenv').config();
 async function scrollExportSettings(frame) {
     try {
         let i = 0;

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const PdfDocument = require('hummus-recipe');
 async function superImpose(filename) {
     const pdfDoc = new PdfDocument('/tmp/downloads/' + filename);
