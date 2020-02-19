@@ -33,16 +33,16 @@ async function handler(event) {
         executablePath: await chromium.executablePath,
         headless: true,
     });
-    // const page = await browser.newPage();
-    // fs.mkdirSync('/tmp/downloads', { recursive: true });
-    // try {
-    //     await impersonate.login(page, username, uname, pass);
-    // } catch (e) {
-    //     console.log(e);
-    //     // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
-    // }
-    // console.log(reportType);
-    // //Generate Report
+    const page = await browser.newPage();
+    fs.mkdirSync('/tmp/downloads', { recursive: true });
+    try {
+        await impersonate.login(page, username, uname, pass);
+    } catch (e) {
+        console.log(e);
+        // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
+    }
+    console.log(reportType);
+    //Generate Report
     // try {
     //     if (reportType == 'construction') {
     //         await construction.constructionReport(page, link);
