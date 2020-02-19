@@ -18,14 +18,13 @@ async function handler(event) {
     //Impersonate
     // const report = JSON.parse(event.Records[0].body);
     const report = event;
-    console.log(report);
-    // const username = report.scheduledBy;
-    // const reportType = report.reportType;
-    // const preparedReportName = report.preparedReportName;
-    // const link = report.link;
-    // const pageType = report.pageType;
-    // const pageNumbers = report.pageNumbers;
-    // const changed_filename = `${report.fileName}.pdf`;
+    const username = report.scheduledBy;
+    const reportType = report.reportType;
+    const preparedReportName = report.preparedReportName;
+    const link = report.link;
+    const pageType = report.pageType;
+    const pageNumbers = report.pageNumbers;
+    const changed_filename = `${report.fileName}.pdf`;
     // // const browser = await puppeteer.launch({ headless: false, defaultViewport: null });
 
     // const browser = await puppeteer.launch({
