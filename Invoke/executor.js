@@ -18,97 +18,98 @@ async function handler(event) {
     //Impersonate
     // const report = JSON.parse(event.Records[0].body);
     const report = event;
-    const username = report.scheduledBy;
-    const reportType = report.reportType;
-    const preparedReportName = report.preparedReportName;
-    const link = report.link;
-    const pageType = report.pageType;
-    const pageNumbers = report.pageNumbers;
-    const changed_filename = `${report.fileName}.pdf`;
-    // const browser = await puppeteer.launch({ headless: false, defaultViewport: null });
+    console.log(report);
+    // const username = report.scheduledBy;
+    // const reportType = report.reportType;
+    // const preparedReportName = report.preparedReportName;
+    // const link = report.link;
+    // const pageType = report.pageType;
+    // const pageNumbers = report.pageNumbers;
+    // const changed_filename = `${report.fileName}.pdf`;
+    // // const browser = await puppeteer.launch({ headless: false, defaultViewport: null });
 
-    const browser = await puppeteer.launch({
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath,
-        headless: true,
-    });
-    const page = await browser.newPage();
-    fs.mkdirSync('/tmp/downloads', { recursive: true });
-    try {
-        await impersonate.login(page, username, uname, pass);
-    } catch (e) {
-        console.log(e);
-        // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
-    }
-    console.log(reportType);
-    //Generate Report
-    try {
-        if (reportType == 'construction') {
-            await construction.constructionReport(page, link);
-        } else if (reportType == 'prepared') {
-            await prepared.preparedReport(page, link, preparedReportName);
-        } else if (reportType == 'spotfire') {
-            await spotfire.spotfireReport(page, link, pageType, pageNumbers);
-        }
-    } catch (e) {
-        console.log(e);
-        // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);
-    }
-    //Rename
-    try {
-        fs.readdirSync('/tmp/downloads').forEach(file => {
-            fs.renameSync('/tmp/downloads/' + file, '/tmp/downloads/' + changed_filename);
-            console.log(file);
-            console.log('rename done');
-        });
-    } catch (e) {
-        console.log(e);
-        // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not renamed - ${e} `);
-    }
-    //Super Impose
-    if (reportType == 'spotfire') {
-        try {
-            await superImpose.superImpose(changed_filename);
-        } catch (e) {
-            console.log(e);
-            // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);
-        }
-    }
-    //upload
-    try {
-        await reportingActions.uploadReport(report);
-    } catch (e) {
-        console.log(e);
-        // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not uploaded - ${e} `);
-    }
-    const objectExist = await s3.objectExist(`${report.fund}/${changed_filename}`);
+    // const browser = await puppeteer.launch({
+    //     args: chromium.args,
+    //     defaultViewport: chromium.defaultViewport,
+    //     executablePath: await chromium.executablePath,
+    //     headless: true,
+    // });
+    // const page = await browser.newPage();
+    // fs.mkdirSync('/tmp/downloads', { recursive: true });
+    // try {
+    //     await impersonate.login(page, username, uname, pass);
+    // } catch (e) {
+    //     console.log(e);
+    //     // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
+    // }
+    // console.log(reportType);
+    // //Generate Report
+    // try {
+    //     if (reportType == 'construction') {
+    //         await construction.constructionReport(page, link);
+    //     } else if (reportType == 'prepared') {
+    //         await prepared.preparedReport(page, link, preparedReportName);
+    //     } else if (reportType == 'spotfire') {
+    //         await spotfire.spotfireReport(page, link, pageType, pageNumbers);
+    //     }
+    // } catch (e) {
+    //     console.log(e);
+    //     // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);
+    // }
+    // //Rename
+    // try {
+    //     fs.readdirSync('/tmp/downloads').forEach(file => {
+    //         fs.renameSync('/tmp/downloads/' + file, '/tmp/downloads/' + changed_filename);
+    //         console.log(file);
+    //         console.log('rename done');
+    //     });
+    // } catch (e) {
+    //     console.log(e);
+    //     // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not renamed - ${e} `);
+    // }
+    // //Super Impose
+    // if (reportType == 'spotfire') {
+    //     try {
+    //         await superImpose.superImpose(changed_filename);
+    //     } catch (e) {
+    //         console.log(e);
+    //         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);
+    //     }
+    // }
+    // //upload
+    // try {
+    //     await reportingActions.uploadReport(report);
+    // } catch (e) {
+    //     console.log(e);
+    //     // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not uploaded - ${e} `);
+    // }
+    // const objectExist = await s3.objectExist(`${report.fund}/${changed_filename}`);
 
-    // mail
-    if (objectExist) {
-        try {
-            console.log('obj exist');
-            await mail.mail(report, changed_filename, reportType);
-            console.log('mail sent');
-        } catch (e) {
-            console.log(e);
-            // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Mail was not send. - ${e} `);
-        }
-    }
+    // // mail
+    // if (objectExist) {
+    //     try {
+    //         console.log('obj exist');
+    //         await mail.mail(report, changed_filename, reportType);
+    //         console.log('mail sent');
+    //     } catch (e) {
+    //         console.log(e);
+    //         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Mail was not send. - ${e} `);
+    //     }
+    // }
 
-    //delete
-    try {
-        await fs.unlinkSync('/tmp/downloads/' + changed_filename);
-    } catch (e) {
-        console.log(e);
-        // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not deleted - ${e} `);
-    }
+    // //delete
+    // try {
+    //     await fs.unlinkSync('/tmp/downloads/' + changed_filename);
+    // } catch (e) {
+    //     console.log(e);
+    //     // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not deleted - ${e} `);
+    // }
 
-    //logout from portal
-    await page.goto(process.env.portal + '/logout');
-    //logout from eds admin
-    await page.goto(process.env.edsAdmin + 'logout');
+    // //logout from portal
+    // await page.goto(process.env.portal + '/logout');
+    // //logout from eds admin
+    // await page.goto(process.env.edsAdmin + 'logout');
 
-    await browser.close();
+    // await browser.close();
 }
 exports.handler = handler;
