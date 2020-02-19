@@ -42,19 +42,19 @@ async function handler(event) {
         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
     }
     console.log(reportType);
-    //Generate Report
-    // try {
-    //     if (reportType == 'construction') {
-    //         await construction.constructionReport(page, link);
-    //     } else if (reportType == 'prepared') {
-    //         await prepared.preparedReport(page, link, preparedReportName);
-    //     } else if (reportType == 'spotfire') {
-    //         await spotfire.spotfireReport(page, link, pageType, pageNumbers);
-    //     }
-    // } catch (e) {
-    //     console.log(e);
-    //     // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);
-    // }
+    // Generate Report
+    try {
+        if (reportType == 'construction') {
+            await construction.constructionReport(page, link);
+        } else if (reportType == 'prepared') {
+            await prepared.preparedReport(page, link, preparedReportName);
+        } else if (reportType == 'spotfire') {
+            await spotfire.spotfireReport(page, link, pageType, pageNumbers);
+        }
+    } catch (e) {
+        console.log(e);
+        // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);
+    }
     // //Rename
     // try {
     //     fs.readdirSync('/tmp/downloads').forEach(file => {
