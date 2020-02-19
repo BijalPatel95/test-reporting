@@ -3,7 +3,7 @@ async function login(page, user,uname,pass) {
     const link = process.env.edsAdminImpersonateURL+user;
     await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: '/tmp/downloads'});    
     console.log('on'+process.env.edsAdmin)
-    await page.goto(process.env.edsAdmin, {waitUntil: 'load', timeout: 0});
+    await page.goto(process.env.edsAdmin, {waitUntil: 'load', timeout: 40000});
     await page.keyboard.type(uname);
     await page.keyboard.press('Tab');
     await page.keyboard.type(pass);
