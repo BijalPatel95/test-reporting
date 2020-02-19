@@ -1,9 +1,23 @@
 require('dotenv').config();
+const AWS = require("aws-sdk");
+const s3 = new AWS.S3();
+const bucket = process.env.bucketName;
+const key = "screenshot";
+
+
 async function login(page, user,uname,pass) {
     const link = process.env.edsAdminImpersonateURL+user;
     await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: '/tmp/downloads'});    
     console.log('on'+process.env.edsAdmin)
-    await page.goto(process.env.edsAdmin, {waitUntil: 'load', timeout: 80000});
+    await page.goto(process.env.edsAdmin, {waitUntil: 'load', timeout: 30000});
+    const screen = await page.screenshot();
+    
+    const params = { Bucket: bucket, Key: key, Body: screen };
+    await s3.putObject(params).promise();
+    
+    console.log('Screenshot sent')
+    const param = {}
+    
     await page.keyboard.type(uname);
     await page.keyboard.press('Tab');
     await page.keyboard.type(pass);
