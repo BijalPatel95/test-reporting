@@ -1,4 +1,5 @@
 'use strict'; 
+const uuidv1 = require('uuid/v1')
 require('dotenv').config();
 const reportingActions = require('./src/reportingActions');
 const AWS = require('aws-sdk');
@@ -18,15 +19,6 @@ const ssm = new AWS.SSM();
 //         });
 // }
 
-
-// async function test(){
-//     const reportList = await reportingActions.getReportsList('Daily', '8AM', undefined);
-//         for (let report of reportList) {
-//                 console.log(report);
-//         }
-// }
-// test();
-
 exports.handler = async (event, context, callback) => {
     const asyncFunctions = [];
     const reportList = await reportingActions.getReportsList('Daily', '8AM', undefined);
@@ -34,8 +26,9 @@ exports.handler = async (event, context, callback) => {
     let i = 0;
     for (let report of reportList){
         i = i+1;
+        var uuid1 = uuidv1();
         asyncFunctions.push(
-            startExecution(`Try17_${i}_${(new Date().toISOString().split('T')[0])}`, report)
+            startExecution(`Report_${i}_${(new Date().toISOString().split('T')[0])}_${uuid1}`, report)
         )
     }
 

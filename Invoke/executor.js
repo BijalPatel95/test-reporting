@@ -16,8 +16,10 @@ const pass = process.env.edsAdminPassword;
 
 async function handler(event) {
     //Impersonate
+    
     // const report = JSON.parse(event.Records[0].body);
-    const report = event;
+    const report = event
+    console.log(report);
     const username = report.scheduledBy;
     const reportType = report.reportType;
     const preparedReportName = report.preparedReportName;
@@ -42,10 +44,10 @@ async function handler(event) {
         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
     }
     console.log(reportType);
-    // Generate Report
+    //Generate Report
     try {
         if (reportType == 'construction') {
-            await construction.constructionReport(page, link);
+            await construction.constructionReport(page,link);
         } else if (reportType == 'prepared') {
             await prepared.preparedReport(page, link, preparedReportName);
         } else if (reportType == 'spotfire') {
@@ -105,9 +107,9 @@ async function handler(event) {
     }
 
     //logout from portal
-    await page.goto(process.env.portal + '/logout');
+    await page.goto(process.env.portal+'/logout');
     //logout from eds admin
-    await page.goto(process.env.edsAdmin + 'logout');
+    await page.goto(process.env.edsAdmin+'logout');
 
     await browser.close();
 }
