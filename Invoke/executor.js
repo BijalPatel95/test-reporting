@@ -71,7 +71,7 @@ async function handler(event) {
     //Super Impose
     if (reportType == 'spotfire') {
         try {
-            await superImpose.superImpose(changed_filename);
+            await superImpose.superImpose('/tmp/downloads/' + changed_filename);
         } catch (e) {
             console.log(e);
             // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);

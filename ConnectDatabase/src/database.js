@@ -4,7 +4,8 @@ const dbConfig = require("./dbConfig")
 class Database {
     static async runQuery(query) {
         try {
-            await sql.connect(dbConfig.configuration)
+            const config = await dbConfig.getDBConfig();
+            await sql.connect(config);
             const result = await sql.query(query)
             sql.close()
             return result["recordset"]
