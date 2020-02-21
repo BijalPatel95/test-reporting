@@ -7,11 +7,11 @@ class Database {
             // const config = await dbConfig.getDBConfig();
             // console.log(config);
 
-            const config = { DATABASE_NAME: 'Quant',
-            DATABASE_SERVER: '40.121.1.186',
-            DATABASE_PASSWORD: 'Init@123',
-            DATABASE_USER: 'test' };
-            
+            const config = { database: 'Quant',
+            server: '40.121.1.186',
+            password: 'Init@123',
+            username: 'test' };
+
             await sql.connect(config);
             const result = await sql.query(query)
             sql.close()
