@@ -35,7 +35,7 @@ exports.getDBConfig = async function() {
                             dbConfig['password'] = value.Value;
                             break;
                         case '/dev/mssql/port':
-                            dbConfig['port'] = value.Value;
+                            dbConfig['port'] = Number(value.Value);
                             break;
                     }
                 });
