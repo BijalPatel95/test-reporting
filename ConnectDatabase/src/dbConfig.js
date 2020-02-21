@@ -39,6 +39,7 @@ exports.getDBConfig = async function() {
             }
         });
     });
+    return myPromise;
 }
 
 
