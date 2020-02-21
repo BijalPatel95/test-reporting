@@ -26,7 +26,7 @@ exports.getDBConfig = async function() {
                 parameters.forEach(function (value) {
                     switch (value.Name) {
                         case "/dev/mssql/username":
-                            dbConfig['username'] = value.Value;
+                            dbConfig['user'] = value.Value;
                             break;
                         case '/dev/mssql/databaseName':
                             dbConfig['database'] = value.Value;
