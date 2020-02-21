@@ -22,16 +22,16 @@ exports.getDBConfig = async function() {
                 parameters.forEach(function (value) {
                     switch (value.Name) {
                         case "/dev/db/username":
-                            dbConfig['username'] = value.Value;
+                            dbConfig['DATABASE_USER'] = value.Value;
                             break;
                         case '/dev/db/database':
-                            dbConfig['database'] = value.Value;
+                            dbConfig['DATABASE_NAME'] = value.Value;
                             break;
                         case '/dev/db/host':
-                            dbConfig['host'] = value.Value;
+                            dbConfig['DATABASE_SERVER'] = value.Value;
                             break;
                         case '/dev/db/password':
-                            dbConfig['password'] = value.Value;
+                            dbConfig['DATABASE_PASSWORD'] = value.Value;
                             break;
                     }
                 });
