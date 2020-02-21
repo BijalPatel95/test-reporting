@@ -35,7 +35,7 @@ exports.getDBConfig = async function() {
                             break;
                     }
                 });
-                return resolve(dbConfig);
+                return dbConfig;
             }
         });
     });
