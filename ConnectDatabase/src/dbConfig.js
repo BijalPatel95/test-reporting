@@ -8,10 +8,11 @@ exports.getDBConfig = async function() {
     var myPromise = new Promise((resolve, reject) => {
         var params = {
             Names: [
-                '/dev/db/username',
-                '/dev/db/database',
-                '/dev/db/host',
-                '/dev/db/password'
+                '/dev/mssql/username',
+                '/dev/mssql/databaseName',
+                '/dev/mssql/host',
+                '/dev/mssql/password',
+                '/dev/mssql/port'
             ],
             WithDecryption: true
         };
@@ -21,17 +22,20 @@ exports.getDBConfig = async function() {
                 var parameters = data.Parameters;
                 parameters.forEach(function (value) {
                     switch (value.Name) {
-                        case "/dev/db/username":
+                        case "/dev/mssql/username":
                             dbConfig['username'] = value.Value;
                             break;
-                        case '/dev/db/database':
+                        case '/dev/mssql/databaseName':
                             dbConfig['database'] = value.Value;
                             break;
-                        case '/dev/db/host':
+                        case '/dev/mssql/host':
                             dbConfig['server'] = value.Value;
                             break;
-                        case '/dev/db/password':
+                        case '/dev/mssql/password':
                             dbConfig['password'] = value.Value;
+                            break;
+                        case '/dev/mssql/port':
+                            dbConfig['port'] = value.Value;
                             break;
                     }
                 });
