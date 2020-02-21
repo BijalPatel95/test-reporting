@@ -5,7 +5,7 @@ class Database {
     static async runQuery(query) {
         try {
             const config = await dbConfig.getDBConfig();
-            // console.log(config);
+            console.log(config);
             await sql.connect(config);
             const result = await sql.query(query)
             sql.close()
