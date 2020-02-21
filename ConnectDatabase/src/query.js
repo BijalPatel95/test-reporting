@@ -126,7 +126,7 @@ LEFT JOIN access a ON a.title = ur.analysisName
 LEFT JOIN navbar n ON n.accessId = a.accessId OR ap.accessId = n.accessId
 
 WHERE 
-ur.id IS NOT NULL AND ur.disabled = 0 AND uf.deleted = 0 AND ur.scheduledBy = 'test' 
+ur.id IS NOT NULL AND ur.disabled = 0 AND uf.deleted = 0  
 
 `
 
