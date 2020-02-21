@@ -28,7 +28,7 @@ exports.getDBConfig = async function() {
                             dbConfig['database'] = value.Value;
                             break;
                         case '/dev/db/host':
-                            dbConfig['host'] = value.Value;
+                            dbConfig['server'] = value.Value;
                             break;
                         case '/dev/db/password':
                             dbConfig['password'] = value.Value;
