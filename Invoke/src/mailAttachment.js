@@ -29,8 +29,8 @@ exports.mail = async function (event,changed_filename,category) {
         } else if (category === 'construction') {
             portalLink += `${event.link}`;
         }
-        const reportLink = `${portalLink}/settings/reporting?reportKey=${fileName}`;
-        const preferenceLink = `${portalLink}/settings/reporting`;
+        const reportLink = `${process.env.portal}/settings/reporting?reportKey=${fileName}`;
+        const preferenceLink = `${process.env.portal}/settings/reporting`;
 
         const firstName = event.firstName;
         const reportName = event.reportName;
