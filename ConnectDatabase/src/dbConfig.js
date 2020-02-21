@@ -3,7 +3,10 @@ var ssm = new AWS.SSM();
 
 
 exports.getDBConfig = async function() {
-    var dbConfig = {};
+    var dbConfig = {
+        options: {
+        enableArithAbort:false}
+    };
 
     var myPromise = new Promise((resolve, reject) => {
         var params = {
