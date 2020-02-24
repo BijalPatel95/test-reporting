@@ -65,6 +65,7 @@ async function handler(event) {
             fs.renameSync('/tmp/downloads/' + file, '/tmp/downloads/' + changed_filename);
             console.log(file);
             console.log('rename done');
+            notifyProcessOnSlack('Rename done');
         });
     } catch (e) {
         console.log(e);
