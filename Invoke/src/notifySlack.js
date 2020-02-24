@@ -32,7 +32,7 @@ exports.notifyProcessOnSlack = async (message) => {
 function invokeLambda(event){
     const lambda = new Lambda({ region: 'us-east-1' });
     const lambdaParams = {
-        FunctionName: 'normal-slack-notification',
+        FunctionName: 'slack-notification',
         InvokeArgs: JSON.stringify(event)
     }
     lambda.invokeAsync(lambdaParams, (error, data) => {

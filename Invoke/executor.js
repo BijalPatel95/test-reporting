@@ -12,7 +12,7 @@ const superImpose = require('./src/mergePdf');
 const mail = require('./src/mailAttachment');
 const s3 = require('./src/s3Actions');
 const slack = require("./src/slackNotifier");
-
+const notify = require("./src/notifySlack");
 const uname = process.env.edsAdminUsername;
 const pass = process.env.edsAdminPassword;
 
