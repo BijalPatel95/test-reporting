@@ -1,5 +1,5 @@
 require('dotenv').config();
-import { notifyErrorOnSlack, notifyProcessOnSlack } from './src/notifySlack';
+// import { notifyErrorOnSlack, notifyProcessOnSlack } from './src/notifySlack';
 const chromium = require('chrome-aws-lambda');
 const puppeteer = require('puppeteer-core');
 const fs = require('fs');
@@ -43,7 +43,7 @@ async function handler(event) {
     } catch (e) {
         console.log(e);
         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
-        notifyErrorOnSlack(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
+        // notifyErrorOnSlack(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
     }
     console.log(reportType);
     //Generate Report
