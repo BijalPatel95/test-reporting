@@ -1,5 +1,5 @@
 require('dotenv').config();
-import { notifyErrorOnSlack, notifyProcessOnSlack } from './src/notifySlack';
+const notify = require("./src/notifySlack");
 const chromium = require('chrome-aws-lambda');
 const puppeteer = require('puppeteer-core');
 const fs = require('fs');
@@ -43,7 +43,7 @@ async function handler(event) {
     } catch (e) {
         console.log(e);
         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
-        notifyErrorOnSlack(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
+        notify.notifyErrorOnSlack(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
     }
     console.log(reportType);
     //Generate Report
@@ -58,6 +58,8 @@ async function handler(event) {
     } catch (e) {
         console.log(e);
         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);
+         notify.notifyErrorOnSlack(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Impersonate was not done - ${e}`);
+        
     }
     //Rename
     try {
@@ -65,11 +67,13 @@ async function handler(event) {
             fs.renameSync('/tmp/downloads/' + file, '/tmp/downloads/' + changed_filename);
             console.log(file);
             console.log('rename done');
-            notifyProcessOnSlack('Rename done');
+            notify.notifyProcessOnSlack('Rename done');
         });
     } catch (e) {
         console.log(e);
         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not renamed - ${e} `);
+        notify.notifyErrorOnSlack(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not renamed - ${e} `);
+        
     }
     //Super Impose
     if (reportType == 'spotfire') {
@@ -78,6 +82,8 @@ async function handler(event) {
         } catch (e) {
             console.log(e);
             // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);
+             notify.notifyErrorOnSlack(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error :${e}`);
+            
         }
     }
     //upload
@@ -86,6 +92,8 @@ async function handler(event) {
     } catch (e) {
         console.log(e);
         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not uploaded - ${e} `);
+        notify.notifyErrorOnSlack(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not uploaded - ${e} `);
+        
     }
     const objectExist = await s3.objectExist(`${report.fund}/${changed_filename}`);
 
@@ -98,6 +106,7 @@ async function handler(event) {
         } catch (e) {
             console.log(e);
             // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Mail was not send. - ${e} `);
+            notify.notifyErrorOnSlack(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : Mail was not send. - ${e} `);
         }
     }
 
@@ -107,6 +116,8 @@ async function handler(event) {
     } catch (e) {
         console.log(e);
         // slack.notifyError(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not deleted - ${e} `);
+        notify.notifyErrorOnSlack(`Id: ${report.id}, User:  ${username}, Link: ${link}, Report Type: ${reportType} . Error : File was not deleted - ${e} `);
+        
     }
 
     //logout from portal
