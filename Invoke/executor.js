@@ -12,6 +12,7 @@ const superImpose = require('./src/mergePdf');
 const mail = require('./src/mailAttachment');
 const s3 = require('./src/s3Actions');
 const slack = require("./src/slackNotifier");
+
 const uname = process.env.edsAdminUsername;
 const pass = process.env.edsAdminPassword;
 
@@ -67,7 +68,6 @@ async function handler(event) {
             fs.renameSync('/tmp/downloads/' + file, '/tmp/downloads/' + changed_filename);
             console.log(file);
             console.log('rename done');
-            notify.notifyProcessOnSlack('Rename done');
         });
     } catch (e) {
         console.log(e);

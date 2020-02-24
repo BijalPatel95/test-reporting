@@ -39,6 +39,7 @@ const startExecution = async (name, input) => {
             if (err) {
                 reject(err);
             }
+            console.log(data.status);
             resolve(data)
         });
     });
